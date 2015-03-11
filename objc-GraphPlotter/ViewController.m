@@ -16,21 +16,12 @@
 
 @implementation ViewController
 
-@synthesize intervalX;
-@synthesize intervalY;
-
-@synthesize axesColor;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
     self.graphView.delegate = self;
     self.graphView.datasource = self;
-    
-    self.intervalX = 5;
-    self.intervalY = 1;
-    self.axesColor = [UIColor grayColor];
     
     self.graphView.bottomColor = [UIColor colorWithRed:0.000 green:0.502 blue:0.502 alpha:1.000];;
     self.graphView.topColor = [UIColor magentaColor];
@@ -51,21 +42,63 @@
     
     return _lines;
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
+//FIXME: Some sort of error if they choose 0 for both min and max...
+
+
+#pragma mark - GraphViewDelegate Methods
 -(AxesRange)rangeForGraphView:(GraphView *)graphView {
+    
     AxesRange axesRange;
-    axesRange.min.x = -15;
-    axesRange.max.x = 5;
-    axesRange.min.y  = -4;
-    axesRange.max.y = 2;
+    axesRange.min.x = -5;
+    axesRange.max.x = 0;
+    axesRange.min.y  = -6;
+    axesRange.max.y = 0;
     
     return axesRange;
 }
 
+-(UILabel *)labelForGraphPart:(GraphPart)graphPart atCoordinate:(CGPoint)point {
+    
+    UILabel *coordinateLabel = [[UILabel alloc] init];
+    
+    if (graphPart == VerticalAxis) {
+        coordinateLabel.text = [NSString stringWithFormat:@"%.0f", point.y];
+    }
+    else if (graphPart == HorizontalAxis) {
+        coordinateLabel.text = [NSString stringWithFormat:@"%.0f", point.x];
+    }
+    else if (graphPart == OriginPoint){
+        //coordinateLabel.text = @"0";
+    }
+    else {
+        coordinateLabel = nil;
+    }
+    
+    return coordinateLabel;
+}
+
+-(UIColor *)colorForAxesForGraphView:(GraphView *)graphView {
+    return [UIColor grayColor];
+}
+
+-(NSInteger)graphView:(GraphView *)graphView intervalForGraphPart:(GraphPart)axis {
+    
+    CGFloat interval;
+    if (axis == HorizontalAxis) {
+        interval = 1.0;
+    }
+    else if (axis == VerticalAxis) {
+        interval = 2.0;
+    }
+    else {
+        //make some sort of exception / error happen here
+    }
+    
+    return interval;
+}
+
+#pragma mark - GraphViewDatasource Methods
 - (NSArray *)graphView:(GraphView *)graphView coordinatesForLineAtIndex:(NSInteger)index {
     
     return self.lines[index];
@@ -85,19 +118,5 @@
     return [self.lines count];
 }
 
--(NSString *)labelForDataAtPoint:(CGPoint)point forAxis:(Axis)axis {
-    if (axis == AxisX) {
-        return [NSString stringWithFormat:@"%.0f", point.x];
-    }
-    else if (axis == AxisY) {
-        return [NSString stringWithFormat:@"%.0f", point.y];
-    }
-    
-    return nil; //should have some sort of error handling
-}
-
--(CGPoint)offsetForLabelAtPoint:(CGPoint)point {
-    
-}
 
 @end

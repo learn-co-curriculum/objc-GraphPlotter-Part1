@@ -15,5 +15,7 @@
 - (UIColor *)colorForLineAtIndex:(NSInteger)index;
 - (NSArray *)graphView:(GraphView *)graphView coordinatesForLineAtIndex:(NSInteger)index;
 
+//ideally this would be optional
+- (NSInteger)graphView:(GraphView *)graphView intervalForGraphPart:(GraphPart)axis;
 
 @end
