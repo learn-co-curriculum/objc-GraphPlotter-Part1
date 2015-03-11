@@ -29,6 +29,9 @@
 }
 
 -(NSArray *)lines {
+    
+    //TODO: make an objc wrapper around CGPoint so don't have to do NSValue stuff
+    
     if (!_lines) {
         
         NSArray * pointsForLine1 = @[[NSValue valueWithCGPoint:CGPointMake(0, 1)], [NSValue valueWithCGPoint:CGPointMake(-1, -2)], [NSValue valueWithCGPoint:CGPointMake(-10, 1)], [NSValue valueWithCGPoint:CGPointMake(-10, 2)]];
@@ -50,46 +53,48 @@
 -(AxesRange)rangeForGraphView:(GraphView *)graphView {
     
     AxesRange axesRange;
-    axesRange.min.x = -5;
-    axesRange.max.x = 0;
-    axesRange.min.y  = -6;
+    axesRange.min.x = -15;
+    axesRange.max.x = 5;
+    axesRange.min.y  = -15;
     axesRange.max.y = 0;
     
     return axesRange;
 }
 
--(UILabel *)labelForGraphPart:(GraphPart)graphPart atCoordinate:(CGPoint)point {
-    
-    UILabel *coordinateLabel = [[UILabel alloc] init];
-    
-    if (graphPart == VerticalAxis) {
-        coordinateLabel.text = [NSString stringWithFormat:@"%.0f", point.y];
-    }
-    else if (graphPart == HorizontalAxis) {
-        coordinateLabel.text = [NSString stringWithFormat:@"%.0f", point.x];
-    }
-    else if (graphPart == OriginPoint){
-        //coordinateLabel.text = @"0";
-    }
-    else {
-        coordinateLabel = nil;
-    }
-    
-    return coordinateLabel;
-}
+//-(UILabel *)labelForGraphPart:(GraphPart)graphPart atCoordinate:(CGPoint)point {
+//    
+//    UILabel *coordinateLabel = [[UILabel alloc] init];
+//    
+//    if (graphPart == VerticalAxis) {
+//        coordinateLabel.text = [NSString stringWithFormat:@"%.0f", point.y];
+//    }
+//    else if (graphPart == HorizontalAxis) {
+//        coordinateLabel.text = [NSString stringWithFormat:@"%.0f", point.x];
+//    }
+//    else if (graphPart == OriginPoint){
+//        //coordinateLabel.text = @"0";
+//    }
+//    else {
+//        coordinateLabel = nil;
+//    }
+//    
+//    return coordinateLabel;
+//}
 
--(UIColor *)colorForAxesForGraphView:(GraphView *)graphView {
-    return [UIColor grayColor];
-}
+//-(UIColor *)colorForAxesForGraphView:(GraphView *)graphView {
+//    return [UIColor greenColor];
+//}
 
+
+//TODO: Switch case instead of if/else
 -(NSInteger)graphView:(GraphView *)graphView intervalForGraphPart:(GraphPart)axis {
     
     CGFloat interval;
     if (axis == HorizontalAxis) {
-        interval = 1.0;
+        interval = 2.0;
     }
     else if (axis == VerticalAxis) {
-        interval = 2.0;
+        interval = 5.0;
     }
     else {
         //make some sort of exception / error happen here
@@ -105,7 +110,7 @@
     
 }
 
-- (UIColor *)colorForLineAtIndex:(NSInteger)index {
+- (UIColor *)graphView:(GraphView *)graphView colorForLineAtIndex:(NSInteger)index {
     if (index == 0) {
         return [UIColor redColor];
     }
@@ -114,7 +119,7 @@
     }
 }
 
--(NSInteger)numberOfLines {
+-(NSInteger)NumberOfLinesForGraphView:(GraphView *)graphView {
     return [self.lines count];
 }
 

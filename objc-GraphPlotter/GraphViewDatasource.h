@@ -11,8 +11,10 @@
 
 @protocol GraphViewDatasource <NSObject>
 
-- (NSInteger)numberOfLines;
-- (UIColor *)colorForLineAtIndex:(NSInteger)index;
+
+//TODO: Add graphView to all datasource methods
+- (NSInteger)numberOfLinesForGraphView:(GraphView *)graphView;
+- (UIColor *)graphView:(GraphView *)graphView colorForLineAtIndex:(NSInteger)index;
 - (NSArray *)graphView:(GraphView *)graphView coordinatesForLineAtIndex:(NSInteger)index;
 
 //ideally this would be optional

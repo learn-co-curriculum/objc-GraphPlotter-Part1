@@ -19,6 +19,7 @@ IB_DESIGNABLE
 @property (nonatomic) IBInspectable UIColor *bottomColor;
 @property (nonatomic) IBInspectable UIColor *topColor;
 
-
+@property (nonatomic) NSInteger axesLineWidth;
+@property (nonatomic) NSInteger lineDataWidth;
 
 @end
