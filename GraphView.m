@@ -26,12 +26,12 @@
 -(void)plotAxesWithOrigin:(CGPoint)origin;
 -(CGFloat)getXScaledPoint;
 -(CGFloat)getYScaledPoint;
--(void)plotPoints:(NSArray *)scaledAndSortedPoints ForLineAtIndex:(NSInteger)index;
--(UILabel *)defaultLabelForGraphPart:(GraphPart)graphPart AtCoordinate:(CGPoint)originalPoint;
+-(void)plotPoints:(NSArray *)scaledAndSortedPoints forLineAtIndex:(NSInteger)index;
+-(UILabel *)defaultLabelForGraphPart:(GraphPart)graphPart atCoordinate:(CGPoint)originalPoint;
 -(NSArray *)scalePoints:(NSArray *)originalPoints withOrigin:(CGPoint)origin;
 -(NSArray *)sortGraphPoints:(NSArray *)unsortedPoints;
 -(void)plotIntervals:(NSArray *)intervals withOrigin:(CGPoint)origin forGraphPart:(GraphPart)graphPart;
--(NSArray *)getIntervalsWithMin:(NSInteger)min Max:(NSInteger)max andInterval:(NSInteger)interval andGraphPart:(GraphPart)graphPart;
+-(NSArray *)getIntervalsWithMin:(NSInteger)min andMax:(NSInteger)max andInterval:(NSInteger)interval andGraphPart:(GraphPart)graphPart;
 - (CGMutablePathRef) createPathForClippingWithRect:(CGRect)rect arcRadius:(CGFloat) arcRadius;
 
 @end
@@ -41,25 +41,20 @@ static const int defaultAxesLineWidth = 5;
 static const int defaultLineDataWidth = 3;
 static const int defaultWorkingBoundsXInset = 25;
 static const int defaultWorkingBoundsYInset = 25;
+
 @implementation GraphView
 
 
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
-    [self setup];
     return self;
 }
 
 -(id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
-    [self setup];
     return self;
 }
 
-- (void)setup {
-    self.axesRange = [self prepareAxesRange];
-    self.workingBounds = [self prepareWorkingBounds];
-}
 
 -(CGRect)prepareWorkingBounds {
     
@@ -81,20 +76,23 @@ static const int defaultWorkingBoundsYInset = 25;
     
     [self plotAxesWithOrigin:origin];
     
+    self.axesRange = [self prepareAxesRange];
+
     //Plot the intervals on the axes
     NSArray *xIntervals = [self getIntervalsWithMin:self.axesRange.min.x
-                                                Max:self.axesRange.max.x
+                                             andMax:self.axesRange.max.x
                                         andInterval:[self.datasource graphView:self intervalForGraphPart:HorizontalAxis]
                                        andGraphPart:HorizontalAxis];
     
     NSArray *yIntervals = [self getIntervalsWithMin:self.axesRange.min.y
-                                                Max:self.axesRange.max.y
+                                             andMax:self.axesRange.max.y
                                         andInterval:[self.datasource graphView:self intervalForGraphPart:VerticalAxis]
                                        andGraphPart:VerticalAxis];
     
     [self plotIntervals:xIntervals withOrigin:origin forGraphPart:HorizontalAxis];
     
     [self plotIntervals:yIntervals withOrigin:origin forGraphPart:VerticalAxis];
+    [self plotIntervals:@[[NSValue valueWithCGPoint:CGPointMake(0, 0)]] withOrigin:origin forGraphPart:OriginPoint];
     
     //Now plot the data
     for (NSInteger i = 0; i < [self.datasource numberOfLinesForGraphView:self]; i++) {
@@ -104,7 +102,7 @@ static const int defaultWorkingBoundsYInset = 25;
         NSArray *scaledAndSortedPoints = [self scalePoints:[self sortGraphPoints:coordinatesForLineAtIndex]
                                                 withOrigin:origin];
         
-        [self plotPoints:scaledAndSortedPoints ForLineAtIndex:i];
+        [self plotPoints:scaledAndSortedPoints forLineAtIndex:i];
     }
 }
 
@@ -214,6 +212,9 @@ static const int defaultWorkingBoundsYInset = 25;
 
 -(CGPoint)findOrigin {
     
+    self.workingBounds = [self prepareWorkingBounds];
+    self.axesRange = [self prepareAxesRange];
+    
     CGFloat minX = self.axesRange.min.x;
     CGFloat maxX = self.axesRange.max.x;
     CGFloat minY = self.axesRange.min.y;
@@ -289,8 +290,7 @@ static const int defaultWorkingBoundsYInset = 25;
 }
 
 
-
--(void)plotPoints:(NSArray *)scaledAndSortedPoints ForLineAtIndex:(NSInteger)index {
+-(void)plotPoints:(NSArray *)scaledAndSortedPoints forLineAtIndex:(NSInteger)index {
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     
@@ -356,7 +356,7 @@ static const int defaultWorkingBoundsYInset = 25;
     return sortedArray;
 }
 
--(UILabel *)defaultLabelForGraphPart:(GraphPart)graphPart AtCoordinate:(CGPoint)originalPoint {
+-(UILabel *)defaultLabelForGraphPart:(GraphPart)graphPart atCoordinate:(CGPoint)originalPoint {
     
     UILabel *intervalLabel = [[UILabel alloc] init];
     
@@ -386,15 +386,15 @@ static const int defaultWorkingBoundsYInset = 25;
             intervalLabel = [self.delegate labelForGraphPart:graphPart atCoordinate:originalPoint];
         }
         else {
-            [self defaultLabelForGraphPart:graphPart AtCoordinate:originalPoint];
+            [self defaultLabelForGraphPart:graphPart atCoordinate:originalPoint];
         }
         
         [intervalLabel sizeToFit];
         
         CGPoint intervalLabelOffset;
         
-        if ([self.delegate respondsToSelector:@selector(offsetForLabelForGraphPart:AtCoordinate:)]) {
-            intervalLabelOffset = [self.delegate offsetForLabelForGraphPart:graphPart AtCoordinate:originalPoint];
+        if ([self.delegate respondsToSelector:@selector(offsetForLabelForGraphPart:atCoordinate:)]) {
+            intervalLabelOffset = [self.delegate offsetForLabelForGraphPart:graphPart atCoordinate:originalPoint];
         } else {
             switch (graphPart) {
                 case HorizontalAxis:
@@ -431,7 +431,7 @@ static const int defaultWorkingBoundsYInset = 25;
     }];
 }
 
--(NSArray *)getIntervalsWithMin:(NSInteger)min Max:(NSInteger)max andInterval:(NSInteger)interval andGraphPart:(GraphPart)graphPart {
+-(NSArray *)getIntervalsWithMin:(NSInteger)min andMax:(NSInteger)max andInterval:(NSInteger)interval andGraphPart:(GraphPart)graphPart {
     
     //assuming only whole number intervals for the time being
     
@@ -453,17 +453,21 @@ static const int defaultWorkingBoundsYInset = 25;
         
         NSValue *newInterval;
         
+        
         if (graphPart == HorizontalAxis) {
             newInterval = [NSValue valueWithCGPoint:CGPointMake(lastInterval, 0)];
         } else {
             newInterval = [NSValue valueWithCGPoint:CGPointMake(0, lastInterval)];
         }
         
-        [intervals addObject:newInterval];
+        if (!(CGPointEqualToPoint([newInterval CGPointValue], CGPointMake(0,0)))) {
+            [intervals addObject:newInterval];
+        }
+        
         lastInterval += interval;
+
     }
-    
-    return intervals;
+        return intervals;
 }
 
 - (CGMutablePathRef) createPathForClippingWithRect:(CGRect)rect arcRadius:(CGFloat) arcRadius {

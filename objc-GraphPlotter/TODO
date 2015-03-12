@@ -1,8 +1,7 @@
 0) Deal with TODOs
-0.1) Deal with "Default" implementation of optional delegate methods in their own methods
-0.2) Remove prepositions from method names?
-0.5) Deal with zero point duplication...
-1) Make interval method optional
+ ------- 0.1) Deal with "Default" implementation of optional delegate methods in their own methods
+ ------- 0.2) Remove prepositions from method names?
+ ------- 0.5) Deal with zero point duplication...
 2) Write README for use
 3) Make Cocoapod
 4) Breakdown solution into pieces for labs (M-est of VPs)
@@ -11,6 +10,7 @@
 6) Basic CoreAnimation of lines
 7) Zoom / Scroll
 8) Deal with anti-aliasing (or half points on screen issue)
+9) Make interval method optional
 
 In total, 3 days of labs/lecture potentially.
 

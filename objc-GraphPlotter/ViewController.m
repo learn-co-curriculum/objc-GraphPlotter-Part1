@@ -56,48 +56,53 @@
     axesRange.min.x = -15;
     axesRange.max.x = 5;
     axesRange.min.y  = -15;
-    axesRange.max.y = 0;
+    axesRange.max.y = 15;
     
     return axesRange;
 }
 
-//-(UILabel *)labelForGraphPart:(GraphPart)graphPart atCoordinate:(CGPoint)point {
-//    
-//    UILabel *coordinateLabel = [[UILabel alloc] init];
-//    
-//    if (graphPart == VerticalAxis) {
-//        coordinateLabel.text = [NSString stringWithFormat:@"%.0f", point.y];
-//    }
-//    else if (graphPart == HorizontalAxis) {
-//        coordinateLabel.text = [NSString stringWithFormat:@"%.0f", point.x];
-//    }
-//    else if (graphPart == OriginPoint){
-//        //coordinateLabel.text = @"0";
-//    }
-//    else {
-//        coordinateLabel = nil;
-//    }
-//    
-//    return coordinateLabel;
-//}
+-(UILabel *)labelForGraphPart:(GraphPart)graphPart atCoordinate:(CGPoint)point {
+    
+    UILabel *coordinateLabel = [[UILabel alloc] init];
+    
+    if (graphPart == VerticalAxis) {
+        coordinateLabel.text = [NSString stringWithFormat:@"%.0f", point.y];
+    }
+    else if (graphPart == HorizontalAxis) {
+        coordinateLabel.text = [NSString stringWithFormat:@"%.0f", point.x];
+    }
+    else if (graphPart == OriginPoint){
+        coordinateLabel.text = @"0";
+    }
+    else {
+        coordinateLabel = nil;
+    }
+    
+    return coordinateLabel;
+}
 
-//-(UIColor *)colorForAxesForGraphView:(GraphView *)graphView {
-//    return [UIColor greenColor];
-//}
+
+-(UIColor *)colorForAxesForGraphView:(GraphView *)graphView {
+    return [UIColor greenColor];
+}
 
 
 //TODO: Switch case instead of if/else
--(NSInteger)graphView:(GraphView *)graphView intervalForGraphPart:(GraphPart)axis {
+-(NSInteger)graphView:(GraphView *)graphView intervalForGraphPart:(GraphPart)graphPart {
     
     CGFloat interval;
-    if (axis == HorizontalAxis) {
-        interval = 2.0;
-    }
-    else if (axis == VerticalAxis) {
-        interval = 5.0;
-    }
-    else {
-        //make some sort of exception / error happen here
+    
+    switch (graphPart) {
+        case HorizontalAxis:
+            interval = 1.0;
+            break;
+        case VerticalAxis:
+            interval = 2.0;
+            break;
+        case OriginPoint:
+            break;
+        case LineData:
+            break;
     }
     
     return interval;
@@ -119,7 +124,7 @@
     }
 }
 
--(NSInteger)NumberOfLinesForGraphView:(GraphView *)graphView {
+-(NSInteger)numberOfLinesForGraphView:(GraphView *)graphView {
     return [self.lines count];
 }
 

@@ -28,7 +28,7 @@ typedef enum GraphPart {
 
 @optional
 -(AxesRange)rangeForGraphView:(GraphView *)graphView;
--(CGPoint)offsetForLabelForGraphPart:(GraphPart)graphPart AtCoordinate:(CGPoint)point;
+-(CGPoint)offsetForLabelForGraphPart:(GraphPart)graphPart atCoordinate:(CGPoint)point;
 -(UIColor *)colorForAxesForGraphView:(GraphView *)graphView;
 -(UILabel *)labelForGraphPart:(GraphPart)graphPart atCoordinate:(CGPoint)point;
 
