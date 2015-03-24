@@ -2,8 +2,11 @@
  ------- 0.1) Deal with "Default" implementation of optional delegate methods in their own methods
  ------- 0.2) Remove prepositions from method names?
  ------- 0.5) Deal with zero point duplication...
+ ------- 0.6) Add reloadGraph;
+ ------- 0.7) Remove extra calls to delegate and datasource methods, so its reflective of the way things are generally done.
+
 2) Write README for use
-3) Make Cocoapod
+ ------- 3) Make Cocoapod
 4) Breakdown solution into pieces for labs (M-est of VPs)
 4.1) Extras: Shadows, alpha, transforms (3-D), more UIBezierPath, (contexts other than drawRect)
 5) Error handling
@@ -18,5 +21,4 @@ Lectures
 1) Core Graphics - drawRectContext (not building your own),
 2) Math?
 3) Custom Delegates / Datasources
-4) Cocoapod
 5) Core Animation

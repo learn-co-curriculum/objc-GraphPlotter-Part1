@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "GraphView.h"
 
-@interface ViewController : UIViewController <GraphViewDelegate, GraphViewDatasource>
+@interface ViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet GraphView *graphView;
+@property (strong, nonatomic) IBOutlet GraphView *graphView;
 
 @end
 

@@ -29,8 +29,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3108E4411AADFCF30055EC54 /* GraphViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphViewDelegate.h; sourceTree = "<group>"; };
-		3108E4421AAE17590055EC54 /* GraphViewDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphViewDatasource.h; sourceTree = "<group>"; };
 		3156D4AB1AB0B3C90083145C /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
 		31913B611AA632C40070FAA7 /* objc-GraphPlotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "objc-GraphPlotter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		31913B651AA632C40070FAA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -90,8 +88,6 @@
 			children = (
 				31913B8A1AA632F80070FAA7 /* GraphView.h */,
 				31913B8B1AA632F80070FAA7 /* GraphView.m */,
-				3108E4411AADFCF30055EC54 /* GraphViewDelegate.h */,
-				3108E4421AAE17590055EC54 /* GraphViewDatasource.h */,
 				3156D4AB1AB0B3C90083145C /* TODO */,
 				31913B681AA632C40070FAA7 /* AppDelegate.h */,
 				31913B691AA632C40070FAA7 /* AppDelegate.m */,
