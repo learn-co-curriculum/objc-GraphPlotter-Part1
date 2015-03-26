@@ -43,7 +43,7 @@ Requirements:
 
 ## Resources
 
-If you need a reminder on how to make things IBInspectable and IB_DESIGNABLE, check out [an article](http://nshipster.com/ibinspectable-ibdesignable/).
+If you need a reminder on how to make objects `IBInspectable` and views `IB_DESIGNABLE`, check out [an article](http://nshipster.com/ibinspectable-ibdesignable/).
 
 ## Hints
 
