@@ -38,16 +38,12 @@ Requirements:
 
 5) Make it possible for the user to add more lines to the view using an `NSArray` of lines.
 
-6) Add a graph background gradient. Make the colors also easily changed by the user. Ideally, make them updateable from the Storyboard Attributes Inspector.
-
-
-## Advanced
-
+6) Add a graph background gradient. Make the colors also easily changed by the user. Ideally, make them updateable from the Storyboard Attributes Inspector and the gradient render in your storyboard.
 
 
 ## Resources
 
-link on ibinspectable 
+If you need a reminder on how to make things IBInspectable and IB_DESIGNABLE, check out [an article](http://nshipster.com/ibinspectable-ibdesignable/).
 
 ## Hints
 
