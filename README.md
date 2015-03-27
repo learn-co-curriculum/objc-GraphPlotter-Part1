@@ -40,6 +40,9 @@ Requirements:
 
 6) Add a graph background gradient. Make the colors also easily changed by the user. Ideally, make them updateable from the Storyboard Attributes Inspector and the gradient render in your storyboard.
 
+Here is what your output should look like when you are finished:
+
+![](http://ironboard-curriculum-content.s3.amazonaws.com/iOS/graphPlotter-Part1/graphPlotter-Part1.png)
 
 ## Resources
 
