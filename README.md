@@ -1,7 +1,4 @@
----
-tags: Core Graphics, DrawRect, Maths
-languages: objc
----
+
 
 # objc-GraphPlotter: Part I
 
